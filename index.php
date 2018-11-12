@@ -133,17 +133,20 @@ if($method == 'POST')
 		
 
 	}
-	/*if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
+	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
 	{
 		//if(isset($json->queryResult->queryText))
 		//{ $sh_desc = $json->queryResult->queryText; }
 
-		if(isset($json->queryResult->parameters->name))
-		{ $name = $json->queryResult->parameters->name; }
+		if(isset($json->queryResult->parameters->incident_num))
+		{ $no = $json->queryResult->parameters->incident_num; }
 		
-		if(isset($json->queryResult->parameters->issue))
-		{ $sh_desc = $json->queryResult->parameters->issue; }
-
+		if(isset($json->queryResult->parameters->sys_id))
+		{ $sys_id = $json->queryResult->parameters->sys_id; }
+		
+		echo $no;
+		echo $sys_id;
+/*
 		$sh_desc = strtolower($sh_desc);
 		//$sh_desc = "Testing";
 		//$name = "someone";
@@ -182,10 +185,10 @@ if($method == 'POST')
 		$speech .= " Sys_id is ".$sys_id;
 		$speech .= "\r\n";
 		$speech .= " Thanks for contacting us. Are you satisfied with the response?";
-		//echo $speech;
+		//echo $speech;*/
 		
 
-	}*/
+	}
 	
 	//--------------------
 	if($json->queryResult->intent->displayName=='SENDMAIL')
