@@ -14,11 +14,11 @@ if($method == 'POST')
 		//if(isset($json->queryResult->queryText))
 		//{ $sh_desc = $json->queryResult->queryText; }
 
-		if(isset($json->queryResult->outputContexts[1]->parameters->name))
-		{ $name = $json->queryResult->outputContexts[1]->parameters->name; }
+		if(isset($json->queryResult->parameters->name))
+		{ $name = $json->queryResult->parameters->name; }
 		
-		if(isset($json->queryResult->outputContexts[1]->parameters->issue))
-		{ $sh_desc = $json->queryResult->outputContexts[1]->parameters->issue; }
+		if(isset($json->queryResult->parameters->issue))
+		{ $sh_desc = $json->queryResult->parameters->issue; }
 
 		$sh_desc = strtolower($sh_desc);
 		//$sh_desc = "Testing";
