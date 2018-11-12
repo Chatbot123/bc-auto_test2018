@@ -49,8 +49,10 @@ if($method == 'POST')
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$incident_no =  $jsonoutput->records[0]->number;
+		$sys_id = $jsonoutput->records[0]->sys_id;
 		
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
+		$speech .= " Sys_id is ".$sys_id;
 		//echo $speech;
 		
 
