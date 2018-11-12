@@ -55,21 +55,22 @@ if($method == 'POST')
 		$sys_id = $jsonoutput->records[0]->sys_id;
 		
 		//----------------------------------------------------------------------------
-		$json->queryResult->parameters->outputContexts[0]->incident_num= $incident_no;
-		$json->queryResult->parameters->outputContexts[0]->sys_id= $sys_id;
+		//$json->queryResult->parameters->outputContexts[0]->incident_num= $incident_no;
+		//$json->queryResult->parameters->outputContexts[0]->sys_id= $sys_id;
 		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
-		curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20150910");
+		curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"lang\": \"en\", \"sessionId\":\"12345\",\"event\":{\"name\":\"TESTEVENT\",\"data\":{\"user_name\":\"Rachna\"}}}");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"lang\": \"en\", \"sessionId\":\"12345\",\"event\":{\"name\":\"STOREDATA\",\"data\":{\"incident_num\":$incident_no, \"sys_id\":$sys_id }}}");
 		curl_setopt($ch, CURLOPT_POST, 1);
 
 		$headers = array();
 		$headers[] = "Content-Type: application/json; charset=utf-8";
-		$headers[] = "Authorization: Bearer a7fa07b1e8cb46bc881c1a8bd1491838";
+		$headers[] = "Authorization: Bearer a9c8361f6f01429bb978cc11bd571048";
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-		$json = curl_exec($ch);
+		curl_exec($ch);
+		curl_close($ch);
 		//---------------------------------------------------------------------------
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
 		$speech .= " Sys_id is ".$sys_id;
