@@ -56,8 +56,8 @@ if($method == 'POST')
 		
 		
 		//----------------------------------------------------------------------------
-		//$json->queryResult->parameters->outputContexts[0]->incident_num= $incident_no;
-		//$json->queryResult->parameters->outputContexts[0]->sys_id= $sys_id;
+		$json->queryResult->parameters->incident_num= $incident_no;
+		$json->queryResult->parameters->sys_id= $sys_id;
 		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
 		/*curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
@@ -151,6 +151,8 @@ if($method == 'POST')
 	}
 	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
 	{
+	echo $json->queryResult->parameters->incident_num;
+		echo $json->queryResult->parameters->sys_id;
 		
 	}
 	
