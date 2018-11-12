@@ -53,8 +53,7 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$incident_no =  $jsonoutput->records[0]->number;
 		$sys_id = $jsonoutput->records[0]->sys_id;
-		global $in_no = $incident_no;
-		global $s_id = $sys_id;
+		
 		
 		//----------------------------------------------------------------------------
 		//$json->queryResult->parameters->outputContexts[0]->incident_num= $incident_no;
@@ -152,11 +151,7 @@ if($method == 'POST')
 	}
 	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
 	{
-		global $in_no; 
-		global $s_id; 
 		
-		echo $in_no;
-		echo $s_id;
 	}
 	
 	//--------------------
