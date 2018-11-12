@@ -53,7 +53,10 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$incident_no =  $jsonoutput->records[0]->number;
 		$sys_id = $jsonoutput->records[0]->sys_id;
-		
+		$json->queryResult->parameters->incident_num= $incident_no;
+		$json->queryResult->parameters->sys_id= $sys_id;
+		echo $json->queryResult->parameters->incident_num;
+		echo $json->queryResult->parameters->sys_id;
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
 		$speech .= " Sys_id is ".$sys_id;
 		$speech .= "\r\n";
@@ -174,10 +177,7 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$incident_no =  $jsonoutput->records[0]->number;
 		$sys_id = $jsonoutput->records[0]->sys_id;
-		$json->queryResult->parameters->incident_num= $incident_no;
-		$json->queryResult->parameters->sys_id= $sys_id;
-		echo $json->queryResult->parameters->incident_num;
-		echo $json->queryResult->parameters->sys_id;
+		
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
 		$speech .= " Sys_id is ".$sys_id;
 		$speech .= "\r\n";
