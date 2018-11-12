@@ -56,6 +56,8 @@ if($method == 'POST')
 		
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
 		$speech .= " Sys_id is ".$sys_id;
+		$speech .= "\r\n";
+		$speech .= " Thanks for contacting us. Are you satisfied with the response?";
 		//echo $speech;
 		
 
