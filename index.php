@@ -27,11 +27,11 @@ if($method == 'POST')
 		$username = "admin";
 		$password = "Avik.17.jan";
 		$table = "incident";
-		//$jsonobj = "{\"short_description\":$sh_desc,\"priority\":\"1\",\"Caller_id\":\"someone\"}";
+		
 		$jsonobj = array('short_description' => $sh_desc);
              	$jsonobj = json_encode($jsonobj);	
 
-		//$jsonobj = "{\"short_description\":$sh_desc,\"priority\":\"1\",\"Caller_id\":$name}";
+		
 		$query = "https://$instance.service-now.com/$table.do?JSONv2&sysparm_action=insert";
 		$curl = curl_init($query);
 		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -53,13 +53,15 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$incident_no =  $jsonoutput->records[0]->number;
 		$sys_id = $jsonoutput->records[0]->sys_id;
+		global $in_no = $incident_no;
+		global $s_id = $sys_id;
 		
 		//----------------------------------------------------------------------------
 		//$json->queryResult->parameters->outputContexts[0]->incident_num= $incident_no;
 		//$json->queryResult->parameters->outputContexts[0]->sys_id= $sys_id;
 		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
-		curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
+		/*curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"lang\": \"en\", \"sessionId\":\"12345\",\"event\":{\"name\":\"STOREDATA\",\"data\":{\"incident_num\":\"INC001003\",\"sys_id\":\"c4aa495ddba123002e6ff36f2996197e\"}}}");
 		curl_setopt($ch, CURLOPT_POST, 1);
@@ -70,7 +72,7 @@ if($method == 'POST')
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
 		curl_exec($ch);
-		curl_close($ch);
+		curl_close($ch);*/
 		//---------------------------------------------------------------------------
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
 		$speech .= " Sys_id is ".$sys_id;
@@ -150,59 +152,11 @@ if($method == 'POST')
 	}
 	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
 	{
-		//if(isset($json->queryResult->queryText))
-		//{ $sh_desc = $json->queryResult->queryText; }
-
-		if(isset($json->queryResult->parameters->incident_num))
-		{ $no = $json->queryResult->parameters->incident_num; }
+		global $in_no; 
+		global $s_id; 
 		
-		if(isset($json->queryResult->parameters->sys_id))
-		{ $sys_id = $json->queryResult->parameters->sys_id; }
-		
-		echo $no;
-		echo $sys_id;
-/*
-		$sh_desc = strtolower($sh_desc);
-		//$sh_desc = "Testing";
-		//$name = "someone";
-		$instance = "dev60887";
-		$username = "admin";
-		$password = "Avik.17.jan";
-		$table = "incident";
-		//$jsonobj = "{\"short_description\":$sh_desc,\"priority\":\"1\",\"Caller_id\":\"someone\"}";
-		$jsonobj = array('short_description' => $sh_desc);
-             	$jsonobj = json_encode($jsonobj);	
-
-		//$jsonobj = "{\"short_description\":$sh_desc,\"priority\":\"1\",\"Caller_id\":$name}";
-		$query = "https://$instance.service-now.com/$table.do?JSONv2&sysparm_action=insert";
-		$curl = curl_init($query);
-		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
-		curl_setopt($curl, CURLOPT_VERBOSE, 1);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-		if($jsonobj)
-		{
-			    curl_setopt($curl, CURLOPT_POST, true);
-			    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonobj);
-		}
-		$response = curl_exec($curl);
-		curl_close($curl);
-		$jsonoutput = json_decode($response);
-		$incident_no =  $jsonoutput->records[0]->number;
-		$sys_id = $jsonoutput->records[0]->sys_id;
-		
-		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
-		$speech .= " Sys_id is ".$sys_id;
-		$speech .= "\r\n";
-		$speech .= " Thanks for contacting us. Are you satisfied with the response?";
-		//echo $speech;*/
-		
-
+		echo $in_no;
+		echo $s_id;
 	}
 	
 	//--------------------
