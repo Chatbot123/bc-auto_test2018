@@ -151,8 +151,8 @@ if($method == 'POST')
 	}
 	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
 	{
-	echo $json->queryResult->parameters->incident_num;
-		echo $json->queryResult->parameters->sys_id;
+	//echo $json->queryResult->parameters->incident_num;
+		//echo $json->queryResult->parameters->sys_id;
 		
 	}
 	
