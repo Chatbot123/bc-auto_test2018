@@ -53,10 +53,24 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$incident_no =  $jsonoutput->records[0]->number;
 		$sys_id = $jsonoutput->records[0]->sys_id;
+		
+		//----------------------------------------------------------------------------
 		$json->queryResult->parameters->outputContexts[0]->incident_num= $incident_no;
 		$json->queryResult->parameters->outputContexts[0]->sys_id= $sys_id;
 		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
+		curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20150910");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"lang\": \"en\", \"sessionId\":\"12345\",\"event\":{\"name\":\"TESTEVENT\",\"data\":{\"user_name\":\"Rachna\"}}}");
+		curl_setopt($ch, CURLOPT_POST, 1);
+
+		$headers = array();
+		$headers[] = "Content-Type: application/json; charset=utf-8";
+		$headers[] = "Authorization: Bearer a7fa07b1e8cb46bc881c1a8bd1491838";
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		$json = curl_exec($ch);
+		//---------------------------------------------------------------------------
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
 		$speech .= " Sys_id is ".$sys_id;
 		$speech .= "\r\n";
