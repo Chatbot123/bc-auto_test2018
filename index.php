@@ -53,8 +53,8 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$incident_no =  $jsonoutput->records[0]->number;
 		$sys_id = $jsonoutput->records[0]->sys_id;
-		$json->queryResult->parameters->incident_num= $incident_no;
-		$json->queryResult->parameters->sys_id= $sys_id;
+		$json->queryResult->parameters->outputContexts[0]->incident_num= $incident_no;
+		$json->queryResult->parameters->outputContexts[0]->sys_id= $sys_id;
 		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
@@ -133,7 +133,7 @@ if($method == 'POST')
 		
 
 	}
-	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
+	/*if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
 	{
 		//if(isset($json->queryResult->queryText))
 		//{ $sh_desc = $json->queryResult->queryText; }
@@ -185,7 +185,7 @@ if($method == 'POST')
 		//echo $speech;
 		
 
-	}
+	}*/
 	
 	//--------------------
 	if($json->queryResult->intent->displayName=='SENDMAIL')
