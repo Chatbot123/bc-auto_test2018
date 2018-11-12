@@ -53,7 +53,20 @@ if($method == 'POST')
 		$jsonoutput = json_decode($response);
 		$incident_no =  $jsonoutput->records[0]->number;
 		$sys_id = $jsonoutput->records[0]->sys_id;
-		
+		$jsonobj = array(
+				'lang' => 'en'
+				'sessionId => '12345'
+				'event' =>
+					array
+					(
+					'name'=>'STOREDATA'
+					data=>
+						array(
+						'incident_num' => $incident_no
+						'sys_id' => $sys_id)
+					)
+				);
+             	$jsonobj = json_encode($jsonobj);	
 		//----------------------------------------------------------------------------
 		//$json->queryResult->parameters->outputContexts[0]->incident_num= $incident_no;
 		//$json->queryResult->parameters->outputContexts[0]->sys_id= $sys_id;
@@ -61,7 +74,7 @@ if($method == 'POST')
 		//echo $json->queryResult->parameters->sys_id;
 		curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"lang\": \"en\", \"sessionId\":\"12345\",\"event\":{\"name\":\"STOREDATA\",\"data\":{\"incident_num\":$incident_no, \"sys_id\":$sys_id }}}");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonobj);
 		curl_setopt($ch, CURLOPT_POST, 1);
 
 		$headers = array();
