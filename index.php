@@ -9,13 +9,16 @@ if($method == 'POST')
 
 //Setup
 
-	if($json->queryResult->intent->displayName=='Raise_ticket_intent - Getname - getissue')
+	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue')
 	{
-		if(isset($json->queryResult->queryText))
-		{ $sh_desc = $json->queryResult->queryText; }
+		//if(isset($json->queryResult->queryText))
+		//{ $sh_desc = $json->queryResult->queryText; }
 
 		if(isset($json->queryResult->outputContexts[1]->parameters->name))
 		{ $name = $json->queryResult->outputContexts[1]->parameters->name; }
+		
+		if(isset($json->queryResult->outputContexts[1]->parameters->issue))
+		{ $sh_desc = $json->queryResult->outputContexts[1]->parameters->issue; }
 
 		$sh_desc = strtolower($sh_desc);
 		//$sh_desc = "Testing";
