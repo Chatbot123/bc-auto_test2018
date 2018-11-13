@@ -58,7 +58,7 @@ if($method == 'POST')
 		//----------------------------------------------------------------------------
 		$json->queryResult->parameters->incident_num= $incident_no;
 		$json->queryResult->parameters->sys_id= $sys_id;
-		$my_file = 'file.txt';
+		$my_file = 'https://github.com/Chatbot123/bc-auto_test2018/file.txt';
 		$handle = fopen($my_file, 'w');
 		$data = $incident_no;
 		fwrite($handle, $data);
@@ -160,7 +160,7 @@ if($method == 'POST')
 	{
 	//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
-		$my_file = 'file.txt';
+		$my_file = 'https://github.com/Chatbot123/bc-auto_test2018/file.txt';
 		$handle = fopen($my_file, 'r');
 		$data = fread($handle,filesize($my_file));
 		fclose($handle);
