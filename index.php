@@ -195,8 +195,9 @@ if($method == 'POST')
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$sh_desc =  $jsonoutput->records[0]->short_description;
-		$speech = "Thanks! Incident closed Successfully for issue " . $sh_desc;
-		$speech .= " Thanks for contacting us";
+		$inc_num =  $jsonoutput->records[0]->number;
+		$speech = "Thanks! Incident ".$inc_num." closed Successfully for issue " . $sh_desc;
+		$speech .= " Thanks for contacting us!";
 		//echo $speech;
 		
 		
