@@ -189,7 +189,7 @@ if($method == 'POST')
 		{
 			    curl_setopt($curl, CURLOPT_POST, true);
 			    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-			    curl_setopt($curl, CURLOPT_POSTFIELDS, {"incident_state":"7","close_notes":"Resolved by Caller","close_code":"Closed/Resolved by Caller","caller_id":"System Administrator"});
+			    curl_setopt($curl, CURLOPT_POSTFIELDS, "{\"incident_state\":\"7\",\"close_notes\":\"Resolved by Caller\",\"close_code\":\"Closed/Resolved by Caller\",\"caller_id\":\"System Administrator\"}");
 		}
 		$response = curl_exec($curl);
 		curl_close($curl);
