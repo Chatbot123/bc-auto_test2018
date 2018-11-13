@@ -56,8 +56,8 @@ if($method == 'POST')
 		
 		
 		//----------------------------------------------------------------------------
-		$json->queryResult->parameters->incident_num= $incident_no;
-		$json->queryResult->parameters->sys_id= $sys_id;
+		//$json->queryResult->parameters->incident_num= $incident_no;
+		//$json->queryResult->parameters->sys_id= $sys_id;
 		
 		
 		//echo $json->queryResult->parameters->incident_num;
@@ -166,13 +166,13 @@ if($method == 'POST')
 		$password = "Avik.17.jan";
 		$table = "incident";
 		
-		$jsonobj = array(
+		/*$jsonobj = array(
 					'incident_state' => '7'
 					'close_notes' => 'Resolved by Caller'
 					'close_code' => 'Closed/Resolved by Caller'
 					'caller_id' => 'System Administrator'
 				);
-             	$jsonobj = json_encode($jsonobj);	
+             	$jsonobj = json_encode($jsonobj);*/	
 
 		
 		$query = "https://$instance.service-now.com/$table.do?JSONv2&sysparm_action=update&sysparm_query=numberENDSWITH".$ticket_num;
@@ -189,36 +189,13 @@ if($method == 'POST')
 		{
 			    curl_setopt($curl, CURLOPT_POST, true);
 			    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonobj);
+			    curl_setopt($curl, CURLOPT_POSTFIELDS, {"incident_state":"7","close_notes":"Resolved by Caller","close_code":"Closed/Resolved by Caller","caller_id":"System Administrator"});
 		}
 		$response = curl_exec($curl);
 		curl_close($curl);
 		$jsonoutput = json_decode($response);
 		$sh_desc =  $jsonoutput->records[0]->short_description;
-		
-		
-		
-		//----------------------------------------------------------------------------
-		
-		
-		
-		//echo $json->queryResult->parameters->incident_num;
-		//echo $json->queryResult->parameters->sys_id;
-		/*curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"lang\": \"en\", \"sessionId\":\"12345\",\"event\":{\"name\":\"STOREDATA\",\"data\":{\"incident_num\":\"INC001003\",\"sys_id\":\"c4aa495ddba123002e6ff36f2996197e\"}}}");
-		curl_setopt($ch, CURLOPT_POST, 1);
-
-		$headers = array();
-		$headers[] = "Content-Type: application/json; charset=utf-8";
-		$headers[] = "Authorization: Bearer a9c8361f6f01429bb978cc11bd571048";
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-		curl_exec($ch);
-		curl_close($ch);*/
-		//---------------------------------------------------------------------------
 		$speech = "Thanks! Incident closed Successfully for issue " . $sh_desc;
-		
 		$speech .= " Thanks for contacting us";
 		//echo $speech;
 		
