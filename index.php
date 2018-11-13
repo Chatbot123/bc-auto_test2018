@@ -173,7 +173,7 @@ if($method == 'POST')
 					'caller_id' => 'System Administrator'
 				);
              	$jsonobj = json_encode($jsonobj);*/	
-
+		$jsonobj=1;
 		
 		$query = "https://$instance.service-now.com/$table.do?JSONv2&sysparm_action=update&sysparm_query=numberENDSWITH".$ticket_num;
 		$curl = curl_init($query);
