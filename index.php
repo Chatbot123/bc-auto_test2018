@@ -60,9 +60,10 @@ if($method == 'POST')
 		$json->queryResult->parameters->sys_id= $sys_id;
 		$my_file = '/../file.txt';
 		$handle = fopen($my_file, 'w');
-		$data = 'This is the data';
+		$data = $incident_no;
 		fwrite($handle, $data);
 		fclose($handle);
+		
 		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
 		/*curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
@@ -81,6 +82,7 @@ if($method == 'POST')
 		$speech = "Thanks ".$name."! Incident Created Successfully for issue " . $sh_desc . " and your incident number is " . $incident_no;
 		$speech .= " Sys_id is ".$sys_id;
 		$speech .= "\r\n";
+		
 		$speech .= " Thanks for contacting us. Are you satisfied with the response?";
 		//echo $speech;
 		
@@ -158,7 +160,11 @@ if($method == 'POST')
 	{
 	//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
-		
+		$my_file = '/../file.txt';
+		$handle = fopen($my_file, 'r');
+		$data = fread($handle,filesize($my_file));
+		fclose($handle);
+		$speech = "File Content ".$data;
 	}
 	
 	//--------------------
