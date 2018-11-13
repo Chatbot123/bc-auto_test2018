@@ -58,11 +58,7 @@ if($method == 'POST')
 		//----------------------------------------------------------------------------
 		$json->queryResult->parameters->incident_num= $incident_no;
 		$json->queryResult->parameters->sys_id= $sys_id;
-		$my_file = 'https://github.com/Chatbot123/bc-auto_test2018/file.txt';
-		$handle = fopen($my_file, 'w');
-		$data = $incident_no;
-		fwrite($handle, $data);
-		fclose($handle);
+		
 		
 		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
@@ -156,15 +152,77 @@ if($method == 'POST')
 		
 
 	}
-	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - yes')
+	if($json->queryResult->intent->displayName=='Raise_ticket_intent - GetnameGetissue - yes - custom')
 	{
-	//echo $json->queryResult->parameters->incident_num;
+		if(isset($json->queryResult->parameters->ticket_num))
+		{ $ticket_num = $json->queryResult->parameters->ticket_num; }
+		str_pad($ticket_num, 7, '0', STR_PAD_LEFT);
+		
+		//{"incident_state":"7","close_notes":"Resolved by Caller","close_code":"Closed/Resolved by Caller","caller_id":"System Administrator"}
+		//$sh_desc = "Testing";
+		//$name = "someone";
+		$instance = "dev60887";
+		$username = "admin";
+		$password = "Avik.17.jan";
+		$table = "incident";
+		
+		$jsonobj = array(
+					'incident_state' => '7'
+					'close_notes' => 'Resolved by Caller'
+					'close_code' => 'Closed/Resolved by Caller'
+					'caller_id' => 'System Administrator'
+				);
+             	$jsonobj = json_encode($jsonobj);	
+
+		
+		$query = "https://$instance.service-now.com/$table.do?JSONv2&sysparm_action=update&sysparm_query=numberENDSWITH".$ticket_num;
+		$curl = curl_init($query);
+		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+		curl_setopt($curl, CURLOPT_VERBOSE, 1);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+		if($jsonobj)
+		{
+			    curl_setopt($curl, CURLOPT_POST, true);
+			    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+			    curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonobj);
+		}
+		$response = curl_exec($curl);
+		curl_close($curl);
+		$jsonoutput = json_decode($response);
+		$sh_desc =  $jsonoutput->records[0]->short_description;
+		
+		
+		
+		//----------------------------------------------------------------------------
+		
+		
+		
+		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
-		$my_file = 'https://github.com/Chatbot123/bc-auto_test2018/file.txt';
-		$handle = fopen($my_file, 'r');
-		$data = fread($handle,filesize($my_file));
-		fclose($handle);
-		$speech = "File Content ".$data;
+		/*curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"lang\": \"en\", \"sessionId\":\"12345\",\"event\":{\"name\":\"STOREDATA\",\"data\":{\"incident_num\":\"INC001003\",\"sys_id\":\"c4aa495ddba123002e6ff36f2996197e\"}}}");
+		curl_setopt($ch, CURLOPT_POST, 1);
+
+		$headers = array();
+		$headers[] = "Content-Type: application/json; charset=utf-8";
+		$headers[] = "Authorization: Bearer a9c8361f6f01429bb978cc11bd571048";
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		curl_exec($ch);
+		curl_close($ch);*/
+		//---------------------------------------------------------------------------
+		$speech = "Thanks! Incident closed Successfully for issue " . $sh_desc;
+		
+		$speech .= " Thanks for contacting us";
+		//echo $speech;
+		
+		
 	}
 	
 	//--------------------
@@ -173,7 +231,7 @@ if($method == 'POST')
 		if(isset($json->queryResult->parameters->to_email))
 		{ $to_email = $json->queryResult->parameters->to_email; }
 	 	/*$mail = new PHPMailer;
-    require_once '/bc-auto2018/PHPMailer/src/class.PHPMailer.php';
+    		require_once '/bc-auto2018/PHPMailer/src/class.PHPMailer.php';
 		$hostname= "smtp.gmail.com";
 		$sender = "intelligentmachine2018@gmail.com";
 		$mail_password="Centurylink2018";
