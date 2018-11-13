@@ -59,9 +59,10 @@ if($method == 'POST')
 		$json->queryResult->parameters->incident_num= $incident_no;
 		$json->queryResult->parameters->sys_id= $sys_id;
 		$my_file = '/../file.txt';
-		$handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file);
+		$handle = fopen($my_file, 'w');
 		$data = 'This is the data';
 		fwrite($handle, $data);
+		fclose($handle);
 		//echo $json->queryResult->parameters->incident_num;
 		//echo $json->queryResult->parameters->sys_id;
 		/*curl_setopt($ch, CURLOPT_URL, "https://api.dialogflow.com/v1/query?v=20180910");
